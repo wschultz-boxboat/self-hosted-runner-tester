@@ -13,5 +13,8 @@ jobs:
       - name: Echo
         run: echo 'hello world'
 
+      - name: Create buildx context
+        run: docker buildx create test
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
