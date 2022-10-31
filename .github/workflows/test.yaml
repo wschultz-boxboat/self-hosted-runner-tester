@@ -20,3 +20,10 @@ jobs:
         uses: docker/setup-buildx-action@v2
         with:
           endpoint: test
+
+      - name: Build Image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: false
+          tags: local/debian:alphav1
