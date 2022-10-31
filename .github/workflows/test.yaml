@@ -16,6 +16,13 @@ jobs:
       - name: Echo
         run: echo 'hello world'
 
+      - name: Login to ACR
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.ACR_LOGIN_SERVER }}
+          username: aksacrselfhosted
+          password: ${{ secrets.ACR_PASSWORD }}
+
       - name: Create buildx context
         run: docker context create test
 
@@ -23,13 +30,6 @@ jobs:
         uses: docker/setup-buildx-action@v2
         with:
           endpoint: test
-
-      - name: Login to ACR
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ env.ACR_LOGIN_SERVER }}
-          username: aksacrselfhosted
-          password: ${{ secrets.ACR_PASSWORD }}
 
       - name: Build Image
         uses: docker/build-push-action@v3
