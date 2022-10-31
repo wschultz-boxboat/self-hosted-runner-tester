@@ -3,6 +3,9 @@ name: 'Test Workflow'
 on:
   workflow_dispatch:
 
+env:
+  ACR_LOGIN_SERVER: aksacrselfhosted.azurecr.io
+
 jobs:
   test:
     runs-on: [self-hosted]
@@ -21,9 +24,16 @@ jobs:
         with:
           endpoint: test
 
+      - name: Login to ACR
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.ACR_LOGIN_SERVER }}
+          username: aksacrselfhosted
+          password: ${{ secrets.ACR_PASSWORD }}
+
       - name: Build Image
         uses: docker/build-push-action@v3
         with:
           context: .
-          push: false
-          tags: local/debian:alphav1
+          push: true
+          tags: ${{ env.ACR_LOGIN_SERVER }}/debian:alphav1
