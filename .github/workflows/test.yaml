@@ -13,8 +13,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Echo
-        run: echo 'hello world'
+      - name: Login to AZ CLI
+        run: az login --identity
 
       - name: Login to ACR
         uses: azure/docker-login@v1
@@ -35,5 +35,5 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          push: true
+          push: false
           tags: ${{ env.ACR_LOGIN_SERVER }}/debian:alphav1
