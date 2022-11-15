@@ -12,3 +12,5 @@ jobs:
 
       - name: Echo
         run: echo 'hello world from the webhook runner'
+      - name: Sleep
+        run: sleep 60
